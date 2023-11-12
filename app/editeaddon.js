@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { SafeAreaView, Text, View } from "react-native";
 import { Stack, useRouter } from "expo-router";
 
-import { COLORS } from "../constants";
-import Dashboard from "../components/dashboard/dashboard";
+import { COLORS, FONT } from "../constants";
+import EditeAddon from "../components/editeaddon/editeaddon";
 
 const addon = (text) => {
   return (
@@ -15,11 +15,16 @@ const addon = (text) => {
     >
       <Stack.Screen
         options={{
-          headerShown: false,
+          headerTitle: "จัดการตัวเลือกอาหาร",
+          headerTitleStyle: {
+            fontFamily: FONT.bold,
+            fontSize: 20,
+          },
+          headerShadowVisible: false,
+          headerShown: true,
         }}
       />
-
-      <Text>editeaddon</Text>
+      <EditeAddon />
     </SafeAreaView>
   );
 };

@@ -3,13 +3,15 @@ import { COLORS, FONT } from "../../constants";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: "100%",
+    flex: 2,
+    borderTopWidth: 1,
+    borderColor: COLORS.lightGray,
   },
-  uppernunderline: (color) => ({
+  underline: (color) => ({
     width: "50%",
     flexDirection: "row",
     justifyContent: "center",
-    borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: color ? color : COLORS.gray,
     padding: 10,
@@ -23,6 +25,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: color ? color : COLORS.black,
   }),
+  text: (color) => ({
+    fontFamily: FONT.regular,
+    fontSize: 14,
+    color: color ? color : COLORS.black,
+  }),
+  littleText: (color) => ({
+    fontFamily: FONT.regular,
+    fontSize: 12,
+    color: color ? color : COLORS.black,
+  }),
+  itemContainer: {
+    height: 60,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: COLORS.lightGray,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: "6%",
+    flexDirection: "row",
+  },
   bottomContainer: {
     position: "absolute",
     bottom: 0,
@@ -33,7 +55,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: COLORS.gray,
   },
-  botton: (h) => ({
+  button: (h) => ({
     width: h,
     height: 32,
     borderRadius: 10,
@@ -42,6 +64,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   }),
+  loading: {
+    height: "100%",
+    justifyContent: "center",
+    alignSelf: "center",
+  },
+  center: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  forkiconbg: (w) => ({
+    height: w,
+    width: w,
+    borderRadius: 1000,
+    backgroundColor: COLORS.lightGray,
+    justifyContent: "center",
+    alignItems: "center",
+  }),
+  forkicon: {
+    height: "75%",
+    width: "75%",
+  },
 });
 
 export default styles;

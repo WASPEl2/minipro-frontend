@@ -17,7 +17,7 @@ const EditeMenuType = () => {
   const navigation = useNavigation();
   const [menuTypeName, setMenuTypeName] = useState("")
   const [oldMenuTypeName, setOldMenuTypeName] = useState("");
-  const [bottonText, setBottonText] = useState("บันทึก");
+  const [buttonText, setbuttonText] = useState("บันทึก");
   const [deleteText, setdeleteText] = useState("ลบหมวดหมู่นี้");
 
 
@@ -37,10 +37,10 @@ const EditeMenuType = () => {
   const savePressHandle = async (path) => {
     if (menuTypeName.trim() === "") {
       popup("ชื่อหมวดหมู่ว่าง","กรุณาใส่ชื่อหมวดหมู่ก่อนกดบันทึก")
-    } else if (menuTypeData.some((item) => item.menu_type_name === menuTypeName)) {
+    } else if (menuTypeData && menuTypeData.some((item) => item.menu_type_name === menuTypeName)) {
       popup("ชื่อหมวดหมู่นี้ถูกใช้ไปแล้ว","กรุณาใช้ชื่อหมวดหมู่อื่น หรือลบหมวดหมู่นั้นก่อน")
     } else {
-      setBottonText("กรุณารอสักครู่...");
+      setbuttonText("กรุณารอสักครู่...");
       if (menuTypeid){
         if (menuTypeName != oldMenuTypeName){
           try {
@@ -55,11 +55,11 @@ const EditeMenuType = () => {
           } catch (error) {
             console.error('Update menu type failed:', error);
           } finally {
-            setBottonText("บันทึก");
+            setbuttonText("บันทึก");
           }
         } else {
           // not do anytime
-          setBottonText("บันทึก");
+          setbuttonText("บันทึก");
           navigation.navigate(path,{
               storeid:storeid,
           });
@@ -80,7 +80,7 @@ const EditeMenuType = () => {
           console.error('Save menu type failed:', error);
         }
         finally{
-          setBottonText("บันทึก");
+          setbuttonText("บันทึก");
         }
       }
     }
@@ -144,8 +144,8 @@ const EditeMenuType = () => {
         </TouchableOpacity> : <></>}
 
       <View style={styles.bottomContainer}>
-        <TouchableOpacity style={styles.botton("95%")} onPress={() => savePressHandle("menutype")}>
-          <Text style={styles.headerText(COLORS.white)} >{bottonText}</Text>
+        <TouchableOpacity style={styles.button("95%")} onPress={() => savePressHandle("menutype")}>
+          <Text style={styles.headerText(COLORS.white)} >{buttonText}</Text>
         </TouchableOpacity>
       </View>
 

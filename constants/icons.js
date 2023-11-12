@@ -11,6 +11,8 @@ import rightArrow from "../assets/icons/right-arrow.png";
 import sort from "../assets/icons/sort.png";
 import trashBin from "../assets/icons/trash-bin.png";
 import tick from "../assets/icons/tick.png";
+import tick2 from "../assets/icons/tick2.png";
+import x from "../assets/icons/x.png";
 
 export default {
   analysis,
@@ -26,4 +28,6 @@ export default {
   sort,
   trashBin,
   tick,
+  tick2,
+  x,
 };

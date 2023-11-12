@@ -4,7 +4,10 @@ import { COLORS, FONT } from "../../constants";
 const styles = StyleSheet.create({
   container: {
     height: "100%",
-    marginHorizontal: "2.4%",
+    paddingHorizontal: "2.4%",
+    paddingTop: "2.4%",
+    borderTopWidth: 1,
+    borderColor: COLORS.lightGray,
   },
   text: (color) => ({
     fontFamily: FONT.regular,
@@ -38,7 +41,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderColor: COLORS.gray,
   },
-  botton: (h) => ({
+  button: (h) => ({
     width: h,
     height: 32,
     borderRadius: 10,
