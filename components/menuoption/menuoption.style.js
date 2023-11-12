@@ -36,13 +36,14 @@ const styles = StyleSheet.create({
     color: color ? color : COLORS.black,
   }),
   itemContainer: {
-    height: 60,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    borderBottomWidth: 4,
     borderColor: COLORS.lightGray,
+    paddingHorizontal: "6%",
+  },
+  nameContainer: {
+    paddingTop: "2.4%",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: "6%",
     flexDirection: "row",
   },
   bottomContainer: {
@@ -85,6 +86,22 @@ const styles = StyleSheet.create({
   forkicon: {
     height: "75%",
     width: "75%",
+  },
+  rightArrow: (clicked) => ({
+    height: 20,
+    width: 20,
+    transform: [{ rotate: clicked ? "270deg" : "90deg" }],
+  }),
+  flexContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  choiceItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderColor: COLORS.lightGray,
+    borderTopWidth: 0.5,
   },
 });
 

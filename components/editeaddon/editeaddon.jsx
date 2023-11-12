@@ -31,10 +31,11 @@ const EditeAddon = () => {
 
   useEffect(() => {
     if (addonid && addonData) {
-      const foundAddonCategory = addonData.find((item) => item.menu_type_id === addonid);
+      const foundAddonCategory = addonData.find((item) => item.addon_id === addonid);
       if (foundAddonCategory) {
-        setAddonName(foundAddonCategory.addon_catagoly_name);
-        setOldAddonName(foundAddonCategory.addon_catagoly_name);
+        setAddonName(foundAddonCategory.addon_name);
+        setOldAddonName(foundAddonCategory.addon_name);
+        setRequir(foundAddonCategory.areRequir);
         setChoices(foundAddonCategory.choices || []);
       }
     }
@@ -59,8 +60,6 @@ const EditeAddon = () => {
   const savePressHandle = async (path) => {
     if (addonName.trim() === "") {
       popup("ชื่อตัวเลือก", "กรุณาใส่ชื่อตัวเลือกก่อนกดบันทึก");
-    } else if (addonData && addonData.some((item) => item.addon_catagoly_name === addonName)) {
-      popup("ชื่อตัวเลือกนี้ถูกใช้ไปแล้ว", "กรุณาใช้ชื่อตัวเลือกอื่น หรือลบตัวเลือกนั้นก่อน");
     } else {
       setButtonText("กรุณารอสักครู่...");
       if (addonid) {
@@ -82,6 +81,8 @@ const EditeAddon = () => {
         } finally {
           setButtonText("บันทึก");
         }
+      } else if (addonData && addonData.some((item) => item.addon_name === addonName)) {
+        popup("ชื่อตัวเลือกนี้ถูกใช้ไปแล้ว", "กรุณาใช้ชื่อตัวเลือกอื่น หรือลบตัวเลือกนั้นก่อน");
       } else {
         try {
           const response = await axios.post(`${api.api}SmartCanteen/store/addon`, {
@@ -108,7 +109,9 @@ const EditeAddon = () => {
     setDeleteText("กำลังลบ...");
     if (addonid) {
       try {
-        const response = await axios.delete(`${api.api}SmartCanteen/store/addon/${addonid}`);
+        const response = await axios.delete(`${api.api}SmartCanteen/store/addon/${addonid}`, {
+            data: { storeid: storeid },
+        });
         if (response.status === 200) {
             navigation.navigate(path, {
             storeid: storeid,
@@ -188,7 +191,7 @@ const EditeAddon = () => {
       />
 
       {addonid ? (
-        <TouchableOpacity style={styles.deleteContainer} onPress={() => deletePressHandle("menutype")}>
+        <TouchableOpacity style={styles.deleteContainer} onPress={() => deletePressHandle("menu_option")}>
           <Image source={icons.trashBin} style={styles.trashBin} />
           <Text style={[styles.text(COLORS.drakGray), { marginLeft: 8 }]}>{deleteText}</Text>
         </TouchableOpacity>
@@ -197,7 +200,7 @@ const EditeAddon = () => {
       )}
 
       <View style={styles.bottomContainer}>
-        <TouchableOpacity style={styles.button("95%")} onPress={() => savePressHandle("menutype")}>
+        <TouchableOpacity style={styles.button("95%")} onPress={() => savePressHandle("menu_option")}>
           <Text style={styles.headerText(COLORS.white)}>{buttonText}</Text>
         </TouchableOpacity>
       </View>

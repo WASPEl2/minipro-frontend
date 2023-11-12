@@ -37,51 +37,49 @@ const EditeMenuType = () => {
   const savePressHandle = async (path) => {
     if (menuTypeName.trim() === "") {
       popup("ชื่อหมวดหมู่ว่าง","กรุณาใส่ชื่อหมวดหมู่ก่อนกดบันทึก")
-    } else if (menuTypeData && menuTypeData.some((item) => item.menu_type_name === menuTypeName)) {
-      popup("ชื่อหมวดหมู่นี้ถูกใช้ไปแล้ว","กรุณาใช้ชื่อหมวดหมู่อื่น หรือลบหมวดหมู่นั้นก่อน")
-    } else {
+    } else if (menuTypeid) {
       setbuttonText("กรุณารอสักครู่...");
-      if (menuTypeid){
-        if (menuTypeName != oldMenuTypeName){
-          try {
-            const response = await axios.put(`${api.api}SmartCanteen/store/menutype/${menuTypeid}`, {
-              menuType: menuTypeName
-            });
-            if (response.status === 200) {
-              navigation.navigate(path,{
-                storeid:storeid,
-              });
-            }
-          } catch (error) {
-            console.error('Update menu type failed:', error);
-          } finally {
-            setbuttonText("บันทึก");
-          }
-        } else {
-          // not do anytime
-          setbuttonText("บันทึก");
-          navigation.navigate(path,{
-              storeid:storeid,
-          });
-        }
-      } else {
+      if (menuTypeName != oldMenuTypeName){
         try {
-          const response = await axios.post(`${api.api}SmartCanteen/store/menutype`, {
-            storeid: storeid,
+          const response = await axios.put(`${api.api}SmartCanteen/store/menutype/${menuTypeid}`, {
             menuType: menuTypeName
           });
-          if (response.status === 201) {
+          if (response.status === 200) {
             navigation.navigate(path,{
               storeid:storeid,
             });
           }
-
         } catch (error) {
-          console.error('Save menu type failed:', error);
-        }
-        finally{
+          console.error('Update menu type failed:', error);
+        } finally {
           setbuttonText("บันทึก");
         }
+      } else {
+        // not do anytime
+        setbuttonText("บันทึก");
+        navigation.navigate(path,{
+            storeid:storeid,
+        });
+      }
+    } else if (menuTypeData && menuTypeData.some((item) => item.menu_type_name === menuTypeName)) {
+      popup("ชื่อหมวดหมู่นี้ถูกใช้ไปแล้ว","กรุณาใช้ชื่อหมวดหมู่อื่น หรือลบหมวดหมู่นั้นก่อน")
+    } else {
+      setbuttonText("กรุณารอสักครู่...");
+      try {
+        const response = await axios.post(`${api.api}SmartCanteen/store/menutype`, {
+          storeid: storeid,
+          menuType: menuTypeName
+        });
+        if (response.status === 201) {
+          navigation.navigate(path,{
+            storeid:storeid,
+          });
+        }
+      } catch (error) {
+        console.error('Save menu type failed:', error);
+      }
+      finally{
+        setbuttonText("บันทึก");
       }
     }
   };

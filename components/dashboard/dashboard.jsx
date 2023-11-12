@@ -36,7 +36,21 @@ const Dashboard = () => {
     return iconSets;
   };
 
+  const fillEmptyIcons = (iconSet) => {
+    const requiredLength = 4;
+    const iconsToAdd = requiredLength - iconSet.length;
+    const dummyIcon = { icon: icons.placeholder, path: "empty" }; // Define a placeholder icon
+
+    for (let i = 0; i < iconsToAdd; i++) {
+      iconSet.push(dummyIcon);
+    }
+    return iconSet;
+  };
+
+
   const iconPress = (path) => {
+    if(path =='empty')
+      return;
     navigation.navigate(path, {
       storeid: storeid
     });
@@ -93,13 +107,13 @@ const Dashboard = () => {
           <View style={{width:"100%"}}>
             {groupIconsIntoSetsOfFour(iconsData).map((iconSet, index) => (
               <View key={index} style={styles.iconRow}>
-                {iconSet.map((item, subIndex) => (
+                {fillEmptyIcons(iconSet).map((item, subIndex) => (
                   <TouchableOpacity 
                     style={styles.iconContainer}
                     onPress={() => iconPress(item.path)}
                     key={subIndex}
                   >
-                    <View style={styles.iconbg(width*0.14)}>
+                    <View style={styles.iconbg(width*0.14,item.path != "empty")}>
                       <Image
                         source={item.icon}
                         style={styles.icon} 

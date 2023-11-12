@@ -15,7 +15,7 @@ const AddChoiceModal = ({ visible, onClose, onSave }) => {
       setChoicePrice("0.0");
       return;
     }
-    onSave({ name: choiceName, price: choicePrice });
+    onSave({ name: choiceName, price: choicePrice, areSale: true });
     setChoiceName("");
     setChoicePrice("");
   };

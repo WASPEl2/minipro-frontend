@@ -70,24 +70,27 @@ const styles = StyleSheet.create({
   rightArrow: {
     width: 25,
     height: 25,
+    borderRadius: 20,
+    backgroundColor: COLORS.white,
   },
   iconRow: {
     flexDirection: "row",
     marginTop: 32,
-    marginHorizontal: "7%",
+    justifyContent: "space-around",
+    marginHorizontal: "5%",
   },
   iconContainer: {
     flexDirection: "column",
     alignItems: "center",
-    paddingHorizontal: "4%",
   },
-  iconbg: (w) => ({
+  iconbg: (w, notempty) => ({
     width: w,
     height: w,
-    backgroundColor: COLORS.lightGray,
+    backgroundColor: notempty ? COLORS.lightGray : COLORS.white,
     borderRadius: 1000,
     justifyContent: "center",
     alignItems: "center",
+    marginHorizontal: "3%",
   }),
   icon: {
     width: "70%",
