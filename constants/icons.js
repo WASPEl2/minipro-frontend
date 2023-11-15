@@ -1,6 +1,7 @@
 import analysis from "../assets/icons/analysis.png";
 import back from "../assets/icons/back.png";
 import bug from "../assets/icons/bug.png";
+import camera from "../assets/icons/camera.png";
 import editshop from "../assets/icons/editshop.png";
 import fork from "../assets/icons/fork.png";
 import history from "../assets/icons/history.png";
@@ -18,6 +19,7 @@ export default {
   analysis,
   back,
   bug,
+  camera,
   editshop,
   fork,
   history,

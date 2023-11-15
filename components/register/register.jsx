@@ -44,7 +44,6 @@ const Register = () => {
     ];
 
     const pickImage = async (imageType) => {
-        setRegisterText("กำลังลงทะเบียน ...")
         try {
             const data = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -62,12 +61,11 @@ const Register = () => {
         } catch (error) {
             console.error(error);
         }
-        finally{
-            setRegisterText("ลงทะเบียน")
-        }
+
     };
 
     const registerHandler = async () => {
+        setRegisterText("กำลังลงทะเบียน ...")
         try {
             const formData = new FormData();
 
@@ -112,6 +110,8 @@ const Register = () => {
 
         } catch (error) {
             console.error('Registration failed:', error);
+        }finally{
+            setRegisterText("ลงทะเบียน")
         }
     };
 
@@ -144,7 +144,7 @@ const Register = () => {
                     <View>
                         <Text style={styles.header}>ข้อมูลร้าน</Text>
                         <InputContainer name={"ชื่อร้าน"} requir={true} placeholder={"กรอกชื่อร้านของคุณ"} onValueChange={(value) => {setStoreName(value)}}/>
-                        <InputContainer name={"ชื่อผู้ใช้งาน (ใช้สำหรับเข้าสู่ระบบ)"} requir={true} placeholder={"กรอกชื่อผู้ใช้งาน ex. aek10"} onValueChange={(value) => {setUsername(value)}}/>
+                        <InputContainer name={"ชื่อผู้ใช้งาน (ใช้สำหรับเข้าสู่ระบบ)"} requir={true} placeholder={"กรอกชื่อผู้ใช้งาน เช่น aek10"} onValueChange={(value) => {setUsername(value)}}/>
                         <InputContainer name={"เบอร์โทร"} requir={true} placeholder={"0812345678"} onValueChange={(value) => {setNumber(value)}}/>
                         <InputContainer name={"รหัสผ่าน"} requir={true} secureTextEntry={true} placeholder={"รหัสผ่าน"} onValueChange={(value) => {setPassword(value)}}/>
                         <InputContainer name={"ยืนยันรหัสผ่าน"} requir={true} secureTextEntry={true} placeholder={"ยืนยันรหัสผ่าน"} onValueChange={(value) => {setPasswordConfirm(value)}}/>
@@ -217,7 +217,7 @@ const Register = () => {
                     <TouchableOpacity onPress={registerHandler} >
                         <View style={styles.line}></View>
                         <View style={styles.bottomContainer}>
-                            <Text style={styles.bottomText}>ลงทะเบียน</Text>
+                            <Text style={styles.bottomText}>{registerText}</Text>
                         </View>
                     </TouchableOpacity>
             </ScrollView>

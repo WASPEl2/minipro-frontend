@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   button: (h, color) => ({
     width: h,
-    height: 32,
+    height: 36,
     borderRadius: 10,
     marginVertical: 12,
     backgroundColor: color ? color : COLORS.primary,

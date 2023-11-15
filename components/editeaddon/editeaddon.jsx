@@ -72,9 +72,7 @@ const EditeAddon = () => {
             choices: choices,
           });
           if (response.status === 200) {
-            navigation.navigate(path, {
-              storeid: storeid,
-            });
+            navigation.goBack();
           }
         } catch (error) {
           console.error("Update addon failed:", error);
@@ -92,9 +90,7 @@ const EditeAddon = () => {
             choices: choices,
           });
           if (response.status === 201) {
-            navigation.navigate(path, {
-              storeid: storeid,
-            });
+            navigation.goBack();
           }
         } catch (error) {
           console.error("Save addon failed:", error);
@@ -105,7 +101,7 @@ const EditeAddon = () => {
     }
   };
 
-  const deletePressHandle = async (path) => {
+  const deletePressHandle = async () => {
     setDeleteText("กำลังลบ...");
     if (addonid) {
       try {
@@ -113,9 +109,7 @@ const EditeAddon = () => {
             data: { storeid: storeid },
         });
         if (response.status === 200) {
-            navigation.navigate(path, {
-            storeid: storeid,
-          });
+            navigation.goBack();
         }
       } catch (error) {
         console.error("Delete addon failed:", error);

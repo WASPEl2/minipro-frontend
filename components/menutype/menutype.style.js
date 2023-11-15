@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     color: color ? color : COLORS.black,
   }),
   bottomContainer: {
-    bottom: 0,
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   }),
   center: {
-    height: "100%",
+    height: "93%",
     justifyContent: "center",
     alignItems: "center",
   },

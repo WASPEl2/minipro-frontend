@@ -19,6 +19,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.gray,
   },
+  headerText: (color) => ({
+    fontFamily: FONT.bold,
+    fontSize: 16,
+    color: color ? color : COLORS.black,
+  }),
+
   inputContainer: {
     width: "100%",
     borderWidth: 1,
@@ -26,11 +32,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 8,
   },
-  headerText: (color) => ({
-    fontFamily: FONT.bold,
-    fontSize: 16,
-    color: color ? color : COLORS.black,
-  }),
+
   bottomContainer: {
     position: "absolute",
     bottom: 0,
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
   },
   button: (h) => ({
     width: h,
-    height: 32,
+    height: 36,
     borderRadius: 10,
     marginVertical: 12,
     backgroundColor: COLORS.primary,
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   deleteContainer: {
     flexDirection: "row",
     height: 32,
-    width: "30%",
+    width: "35%",
     marginTop: "3%",
     borderRadius: 5,
     backgroundColor: COLORS.lightGray,

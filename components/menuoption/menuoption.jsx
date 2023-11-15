@@ -6,7 +6,7 @@ import axios from "axios";
 
 
 import useFetch from "../../hook/useFetch";
-import { COLORS, icons } from "../../constants";
+import { COLORS, icons, images } from "../../constants";
 import { api } from "../../constants";
 import styles from "../menuoption/menuoption.style";
 import { useRouter } from "expo-router";
@@ -17,13 +17,11 @@ const Menuoption = () => {
   const storeid = route.params.storeid;
   const navigation = useNavigation();
 
-  const { data: addonData, isLoading: addonLoading, error: addonError,refetch } = useFetch("addon", { storeid: storeid });
-  
-  const menuData = false;
-  const menuLoading = false;
-  const menuError = false;
+  const { data: addonData, isLoading: addonLoading, error: addonError,refetch: addonRefetch } = useFetch("addon", { storeid: storeid });
+  const { data: menuData, isLoading: menuLoading, error: menuError,refetch: menuRefetch } = useFetch("menus", { storeid: storeid });
 
   const [clickedAddonId, setClickedAddonId] = useState(null);
+  const [clickedMenuId, setClickedMenuId] = useState(null);
   const [selectMenubar, SetSelectMenuBar] = useState(true);
   const [choiceStates, setChoiceStates] = useState({});
 
@@ -31,7 +29,8 @@ const Menuoption = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      refetch();
+      addonRefetch();
+      menuRefetch();
     }, [])
   );
 
@@ -96,12 +95,22 @@ const Menuoption = () => {
   };
 
 
-  const handlebuttonPress = (path, addonid) => {
+  const handlebuttonPress = (path, id) => {
     if(path == "editeaddon"){
       navigation.navigate("editeaddon", {
         storeid: storeid,
-        addonid: addonid,
+        addonid: id,
         addonData:addonData
+      });
+    } else if (path == "editemenu" ){
+      navigation.navigate("editemenu", {
+        storeid: storeid,
+        menuid: id,
+        menuData: menuData
+      });
+    } else {
+      navigation.navigate(path, {
+        storeid: storeid,
       });
     }
   };
@@ -111,8 +120,12 @@ const Menuoption = () => {
       setClickedAddonId(addonid)
     else
       setClickedAddonId(null)
-
-    
+  };
+  const clickedMenuIdHandler = (meun) => {
+    if(clickedMenuId != meun)
+      setClickedMenuId(meun)
+    else
+      setClickedMenuId(null)
   };
 
   return (
@@ -140,15 +153,58 @@ const Menuoption = () => {
           ) : (
             menuData && menuData.length > 0 ? (
               <ScrollView style={{ height: "100%" }}>
-                {/* {menuData.map((item) => (
-                  <TouchableOpacity
-                    key={item.menu_type_id}
-                    style={styles.itemContainer}
-                    onPress={() => handlebuttonPress("editemenutype", item.menu_type_id)}
-                  >
-                    <Text style={styles.text()}>test</Text>
-                  </TouchableOpacity>
-                ))} */}
+                {menuData.map((menu_type) => (
+                  <View key={menu_type.menu_type_id} style={styles.subContainer}>
+                    <TouchableOpacity
+                      style={styles.nameContainer}
+                      onPress={() => {clickedMenuIdHandler(menu_type.menu_type_id)}}
+                    >
+                      <Text style={styles.headerText()}>{menu_type.menu_type_name}</Text>
+                      <Image
+                        source={icons.rightArrow}
+                        style={styles.rightArrow(clickedMenuId === menu_type.menu_type_id)}
+                        resizeMode="contain"
+                      />
+                    </TouchableOpacity>
+                    {clickedMenuId === menu_type.menu_type_id ? <View >
+                      { menu_type.menu_type_name == "ยังไม่ถูกจัดหมวดหมู่" ? <Text style={styles.text('red')}>* ลูกค้าไม่สามารถสั่งได้</Text> : <></>}
+                      <View style={{padding:"0.5%"}}/>
+                      
+
+                      {menu_type.menu_items.map((menu) => (
+                        <View key={menu.menu_id} >
+                        {menu.menu_id !== null ? (
+                          <TouchableOpacity style={styles.menuItem} onPress={() => {handlebuttonPress("editemenu",menu.menu_id)}}>
+                            {menu.menu_image ? (
+                              <Image
+                                source={{ uri: `data:image/jpeg;base64,${menu.menu_image}` }}
+                                style={styles.menuImage}
+                                resizeMode="cover"
+                              />
+                            ) : (
+                              <Image
+                                source={images.emptyFoodImage}
+                                style={styles.menuImage}
+                                resizeMode="contain"
+                              />
+                            )}
+                            <View style={{ paddingLeft: 16 }}>
+                              <Text style={styles.text()}>{menu.menu_name}</Text>
+                              <Text style={styles.boldText()}>{menu.menu_price} ฿</Text>
+                              <Text style={styles.text(COLORS.gray)}>{menu.menu_description}</Text>
+                            </View>
+                          </TouchableOpacity>
+                        ) : (
+                          <View style={styles.emptyMenu}>
+                            <Text style={styles.littleText(COLORS.gray)}>ยังไม่มีรายการอาหารในหมวดหมู่นี้</Text>
+                          </View>
+                        )}
+                      </View>
+                      ))}
+                    </View>: <></>}
+                  </View>
+                  
+                ))}
               </ScrollView>
             ) : (
               <View style={styles.center}>
@@ -173,7 +229,7 @@ const Menuoption = () => {
                 <Text style={styles.headerText()}>แก้ไขหมวดหมู่</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.button("45%")} onPress={() => handlebuttonPress("editemenu")}>
-                <Text style={styles.headerText()}>เพิ่มราการอาหาร</Text>
+                <Text style={styles.headerText()}>เพิ่มรายการอาหาร</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -187,7 +243,7 @@ const Menuoption = () => {
             addonData && addonData.length > 0 ? (
               <ScrollView style={{ height: "100%" }}>
                 {addonData.map((addon) => (
-                  <View key={addon.addon_id} style={styles.itemContainer}>
+                  <View key={addon.addon_id} style={styles.subContainer}>
                     <TouchableOpacity
                       style={styles.nameContainer}
                       onPress={() => {clickedAddonIdHandler(addon.addon_id)}}
@@ -234,7 +290,7 @@ const Menuoption = () => {
                           </View>
                         </View>
                       ))}
-                    </View> : <View style={{ paddingBottom: "2.4%" }}></View>}
+                    </View> : <></>}
                   </View>
                 ))}
               </ScrollView>
